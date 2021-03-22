@@ -1,0 +1,30 @@
+{
+    "name": "leocavalcante/swoole-postgresql-doctrine-driver",
+    "description": "A Doctrine DBAL Driver implementation on top of Swoole Coroutine PostgreSQL extension",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "leocavalcante",
+            "email": "lc@leocavalcante.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "scripts": {
+        "test": "pest"
+    },
+    "require": {
+        "php": "^7.4|^8.0",
+        "ext-swoole": "^4.6",
+        "doctrine/dbal": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Doctrine\\DBAL\\Driver\\Swoole\\Coroutine\\PostgreSQL\\": "src/"
+        }
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.0",
+        "swoole/ide-helper": "^4.6"
+    }
+}

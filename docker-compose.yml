@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  composer:
+    build: .
+    entrypoint: composer
+    command: validate
+    volumes:
+    - ./:/var/www
+
+  php:
+    build: .
+    entrypoint: php
+    command: -v
+    volumes:
+      - ./:/var/www
