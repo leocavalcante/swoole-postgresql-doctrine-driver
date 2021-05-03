@@ -16,7 +16,7 @@ final class Driver extends AbstractPostgreSQLDriver
     {
         if (!isset(self::$pool)) {
             self::$pool = new ConnectionPool(
-                fn(): Connection => $this->create($this->dsn($params)),
+                fn(): Connection => $this->createConnection($this->dsn($params)),
                 $params['poolSize'] ?? self::DEFAULT_POOL_SIZE,
             );
         }
@@ -29,7 +29,7 @@ final class Driver extends AbstractPostgreSQLDriver
     /**
      * @throws ConnectionException
      */
-    public function create(string $dsn): Connection
+    public function createConnection(string $dsn): Connection
     {
         $pgsql = new PostgreSQL();
 
