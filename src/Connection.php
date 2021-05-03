@@ -3,11 +3,10 @@
 namespace Doctrine\DBAL\Driver\Swoole\Coroutine\PostgreSQL;
 
 use Doctrine\DBAL\Driver\Connection as ConnectionInterface;
-use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\ParameterType;
 use Swoole\Coroutine\PostgreSQL;
 
-final class Connection implements ConnectionInterface
+final class Connection implements ConnectionInterface, ServerInfoAwareConnection
 {
     private PostgreSQL $connection;
 
@@ -15,6 +14,11 @@ final class Connection implements ConnectionInterface
     {
         $this->connection = new PostgreSQL();
         $this->connection->connect($dsn);
+    }
+
+    public function getWrappedConnection(): PostgreSQL
+    {
+        return $this->connection;
     }
 
     public function prepare(string $sql): Statement
@@ -27,7 +31,7 @@ final class Connection implements ConnectionInterface
         return new Result($this->connection, $this->connection->query($sql));
     }
 
-    public function quote($value, $type = ParameterType::STRING)
+    public function quote($value, $type = ParameterType::STRING): string
     {
         return "'" . $this->connection->escape($value) . "'";
     }
