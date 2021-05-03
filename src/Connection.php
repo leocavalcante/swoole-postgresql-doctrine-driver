@@ -6,7 +6,7 @@ use Doctrine\DBAL\Driver\Connection as ConnectionInterface;
 use Doctrine\DBAL\ParameterType;
 use Swoole\Coroutine\PostgreSQL;
 
-final class Connection implements ConnectionInterface, ServerInfoAwareConnection
+final class Connection implements ConnectionInterface
 {
     private PostgreSQL $connection;
 
