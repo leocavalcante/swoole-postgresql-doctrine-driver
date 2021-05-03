@@ -10,7 +10,8 @@ $params = [
     'user' => 'postgres',
     'password' => 'postgres',
     'host' => 'db',
-    'driverClass' => Driver\Swoole\Coroutine\PostgreSQL\Driver::class
+    'driverClass' => Driver\Swoole\Coroutine\PostgreSQL\Driver::class,
+    'poolSize' => 8,
 ];
 
 $conn = DriverManager::getConnection($params);
@@ -21,17 +22,13 @@ Co\run(static function() use ($conn): void {
     $wg = new Co\WaitGroup();
     $start_time = time();
 
-    Co::create(static function() use (&$results, $wg, $conn): void {
-        $wg->add();
-        $results[] = $conn->executeQuery('select 1, pg_sleep(1)')->fetchOne();
-        $wg->done();
-    });
-
-    Co::create(static function() use (&$results, $wg, $conn): void {
-        $wg->add();
-        $results[] = $conn->executeQuery('select 1, pg_sleep(1)')->fetchOne();
-        $wg->done();
-    });
+    foreach (range(1, 8) as $i) {
+        Co::create(static function() use (&$results, $wg, $conn): void {
+            $wg->add();
+            $results[] = $conn->executeQuery('select 1, pg_sleep(1)')->fetchOne();
+            $wg->done();
+        });
+    }
 
     $wg->wait();
     $elapsed = time() - $start_time;

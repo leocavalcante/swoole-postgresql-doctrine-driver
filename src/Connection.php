@@ -10,10 +10,9 @@ final class Connection implements ConnectionInterface
 {
     private PostgreSQL $connection;
 
-    public function __construct(string $dsn)
+    public function __construct(PostgreSQL $connection)
     {
-        $this->connection = new PostgreSQL();
-        $this->connection->connect($dsn);
+        $this->connection = $connection;
     }
 
     public function getWrappedConnection(): PostgreSQL
