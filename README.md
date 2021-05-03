@@ -22,7 +22,8 @@ $params = [
     'user' => 'postgres',
     'password' => 'postgres',
     'host' => 'db',
-    'driverClass' => Driver\Swoole\Coroutine\PostgreSQL\Driver::class
+    'driverClass' => Driver\Swoole\Coroutine\PostgreSQL\Driver::class,
+    'poolSize' => 8,
 ];
 
 $conn = DriverManager::getConnection($params);
