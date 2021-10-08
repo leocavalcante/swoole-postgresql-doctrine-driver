@@ -19,7 +19,17 @@ final class Statement implements StatementInterface
         $this->connection = $connection;
         $this->params = [];
         $this->key = md5($sql);
-        $this->connection->prepare($this->key, $sql);
+
+        $count = 0;
+        $sql = preg_replace_callback('/\s(\?[\s\d]?)/', function () use (&$count) {
+            $count++;
+            return ' $'.$count.' ';
+        }, $sql);
+
+        $result = $this->connection->prepare($this->key, $sql);
+        if (!$result) {
+            throw new \Doctrine\DBAL\Exception($this->connection->error);
+        }
     }
 
     public function bindValue($param, $value, $type = ParameterType::STRING)
@@ -34,13 +44,14 @@ final class Statement implements StatementInterface
 
     public function execute($params = null): ResultInterface
     {
-        return new Result(
-            $this->connection,
-            $this->connection->execute(
-                $this->key,
-                array_merge($this->params, $params ?? []),
-            ),
-        );
+        $params = array_merge($this->params, $params ?? []);
+        $result = $this->connection->execute($this->key, $params);
+
+        if (is_bool($result)) {
+            throw new \Doctrine\DBAL\Exception($this->connection->error);
+        }
+
+        return new Result($this->connection, $result);
     }
 
     private function escape($value, int $type): string

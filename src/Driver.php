@@ -9,7 +9,7 @@ use Swoole\Coroutine\PostgreSQL;
 
 final class Driver extends AbstractPostgreSQLDriver
 {
-    public const DEFAULT_POOL_SIZE = 8;
+    public const DEFAULT_POOL_SIZE = 16;
     private static ConnectionPool $pool;
 
     public function connect(array $params): ConnectionInterface

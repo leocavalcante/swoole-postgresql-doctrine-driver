@@ -3,6 +3,7 @@
 namespace Doctrine\DBAL\Driver\Swoole\Coroutine\PostgreSQL;
 
 use Doctrine\DBAL\Driver\Connection as ConnectionInterface;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\ParameterType;
 use Swoole\Coroutine\PostgreSQL;
 
@@ -27,7 +28,16 @@ final class Connection implements ConnectionInterface
 
     public function query(string $sql): Result
     {
-        return new Result($this->connection, $this->connection->query($sql));
+        try {
+            $result = $this->connection->query($sql);
+            if (is_bool($result)) {
+                throw new Exception($this->connection->error);
+            }
+        } catch (\Excception $e) {
+            throw \Doctrine\DBAL\Driver\PDO\Exception::new($e);
+        }
+
+        return new Result($this->connection, $result);
     }
 
     public function quote($value, $type = ParameterType::STRING): string

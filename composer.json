@@ -16,6 +16,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "ext-swoole": "^4.6",
+        "ext-swoole_postgresql": "*",
         "doctrine/dbal": "^3.0"
     },
     "autoload": {

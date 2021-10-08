@@ -13,6 +13,10 @@ class Result implements ResultInterface
 
     public function __construct(PostgreSQL $connection, $result)
     {
+        if (!is_resource($result)) {
+            throw new \Doctrine\DBAL\Exception('Result must be a resource');
+        }
+
         $this->connection = $connection;
         $this->result = $result;
     }
