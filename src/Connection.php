@@ -33,7 +33,7 @@ final class Connection implements ConnectionInterface
             if (is_bool($result)) {
                 throw new Exception($this->connection->error);
             }
-        } catch (\Excception $e) {
+        } catch (\Exception $e) {
             throw \Doctrine\DBAL\Driver\PDO\Exception::new($e);
         }
 
