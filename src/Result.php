@@ -29,17 +29,20 @@ class Result implements ResultInterface
 
     public function fetchOne()
     {
-        return $this->connection->fetchRow($this->result)[0];
+        $result = $this->connection->fetchRow($this->result);
+        return $result ? $result[0] : false;
     }
 
     public function fetchAllNumeric(): array
     {
-        return $this->connection->fetchAll($this->result,SW_PGSQL_NUM);
+        $result = $this->connection->fetchAll($this->result,SW_PGSQL_NUM);
+        return $result ? $result : array();
     }
 
     public function fetchAllAssociative(): array
     {
-        return $this->connection->fetchAll($this->result,SW_PGSQL_ASSOC);
+        $result = $this->connection->fetchAll($this->result,SW_PGSQL_ASSOC);
+        return $result ? $result : array();
     }
 
     public function fetchFirstColumn(): array
