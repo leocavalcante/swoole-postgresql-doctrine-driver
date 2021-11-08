@@ -35,8 +35,7 @@ class Result implements ResultInterface
 
     public function fetchAllNumeric(): array
     {
-        $result = $this->connection->fetchAll($this->result,SW_PGSQL_NUM);
-        return $result ? $result : array();
+        return $this->connection->fetchAll($this->result, SW_PGSQL_NUM) ?: [];
     }
 
     public function fetchAllAssociative(): array
