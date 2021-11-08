@@ -40,8 +40,7 @@ class Result implements ResultInterface
 
     public function fetchAllAssociative(): array
     {
-        $result = $this->connection->fetchAll($this->result,SW_PGSQL_ASSOC);
-        return $result ? $result : array();
+        return $this->connection->fetchAll($this->result, SW_PGSQL_ASSOC) ?: [];
     }
 
     public function fetchFirstColumn(): array
