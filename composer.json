@@ -15,8 +15,11 @@
     },
     "require": {
         "php": "^7.4|^8.0",
-        "ext-swoole": "^4.6",
         "doctrine/dbal": "^3.0"
+    },
+    "suggest": {
+        "ext-swoole": "You need either ext-swoole or ext-openswoole",
+        "ext-openswoole": "You need either ext-swoole or ext-openswoole"
     },
     "autoload": {
         "psr-4": {
