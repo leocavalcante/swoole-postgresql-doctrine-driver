@@ -15,8 +15,7 @@
     },
     "require": {
         "php": "^7.4|^8.0",
-        "ext-swoole": "^4.6",
-        "ext-swoole_postgresql": "*",
+        "ext-openswoole": "^4.8.0",
         "doctrine/dbal": "^3.0"
     },
     "autoload": {
@@ -26,6 +25,6 @@
     },
     "require-dev": {
         "pestphp/pest": "^1.0",
-        "swoole/ide-helper": "^4.6"
+        "openswoole/ide-helper": "^4.6"
     }
 }
